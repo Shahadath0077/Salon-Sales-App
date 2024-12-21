@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalonAccountSystem.Views.SalesDetailPage"
+             xmlns:models="clr-namespace:SalonAccountSystem.Models"
+             xmlns:viewModels="clr-namespace:SalonAccountSystem.ViewModels"
+             Title="Sales Detail">
+
+    <ScrollView>
+
+        <VerticalStackLayout>
+            <HorizontalStackLayout Spacing="20" HorizontalOptions="Start" >
+                <Image Margin="10,-20" Source="calendar.png" />
+                <Label Margin="3,20"  Text="{Binding SalesReportDetail.SalesMonth}" FontSize="20" TextColor="Maroon" FontAttributes="Bold" />
+            </HorizontalStackLayout>
+
+            <CollectionView Margin="10,8" ItemsSource="{Binding DailySalesGroupList}" IsGrouped="True" >
+
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate x:DataType="models:DailySalesDetailGroupModel">
+                        <Frame Margin="0,2" Padding="10" HeightRequest="50" BorderColor="Transparent" BackgroundColor="Bisque" >
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout HorizontalOptions="Start">
+                                    <Label Text="{Binding SalesDate,StringFormat='{0:d}'}" FontSize="18" TextColor="Black" FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout HorizontalOptions="EndAndExpand">
+                                    <Label  Margin="0,-25" Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
+
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:DailySalesModel">
+                        <Frame Margin="0" Padding="15" CornerRadius="1">
+
+                            <VerticalStackLayout>
+                                <Grid RowDefinitions="*" ColumnDefinitions="*, *,*" ColumnSpacing="80">
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" >
+                                        <Image Margin="5,0" Source="category.png"/>
+                                        <Label Text="{Binding SalesType}" FontSize="16" FontAttributes="Bold" />
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" >
+                                        <Label  Text="{Binding SalesDate,StringFormat='{0:hh:mm:ss}'}" FontSize="16" FontAttributes="Bold" TextColor="gray"/>
+                                    </StackLayout>
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="0" Grid.Column="2" >
+                                        <Label  Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Red"/>
+                                    </StackLayout>
+                                </Grid>
+                            </VerticalStackLayout>
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:SalesDetailPageViewModel}},Path=DisplayActionCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

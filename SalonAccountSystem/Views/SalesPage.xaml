@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalonAccountSystem.Views.SalesPage"
+             xmlns:models="clr-namespace:SalonAccountSystem.Models"
+             xmlns:viewModels="clr-namespace:SalonAccountSystem.ViewModels"
+             Title="Sales"
+             BackgroundColor="AliceBlue">
+
+    <ScrollView>
+        
+        <VerticalStackLayout>
+
+            <CollectionView Margin="20,10" ItemsSource="{Binding MonthlySalesReportList}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:SalesReportModel" >
+                        <Frame Margin="0,5" >
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout HorizontalOptions="Start">
+                                    <Image Source="calendar_header.png" WidthRequest="50" HeightRequest="40"/>
+                                    <Label Margin="0,12" Text="{Binding SalesMonth}" FontSize="20" FontAttributes="Bold" />
+                                </HorizontalStackLayout>
+                                <HorizontalStackLayout HorizontalOptions="EndAndExpand" Spacing="30">
+                                    <Label  Margin="0,-40" Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="20" FontAttributes="Bold" TextColor="Red"/>
+                                </HorizontalStackLayout>
+                            </VerticalStackLayout>
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:SalesPageViewModel}},Path=NavigateToSalesDetailPageCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+            </CollectionView>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

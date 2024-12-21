@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="SalonAccountSystem.Views.AddServiceTypePopup"
+             Size="320,250"              
+             Color="AliceBlue">
+    
+    <VerticalStackLayout>
+
+        <HorizontalStackLayout BackgroundColor="Bisque">
+            <Image Margin="10,0" Source="category.png" WidthRequest="30" HeightRequest="30" />
+            <Label
+                Margin="10,20" Text="Service Type" 
+                HorizontalOptions="StartAndExpand" FontSize="16"
+                FontAttributes="Bold"/>
+
+            <Button  
+                Margin="110,0"   ImageSource="x_close.png"                          
+                BackgroundColor="Transparent"  FontAttributes="Bold"
+                WidthRequest="50" HeightRequest="60"
+                HorizontalOptions="End" Clicked="Button_Clicked">
+            </Button>
+        </HorizontalStackLayout>
+
+        <VerticalStackLayout Margin="20,15" HorizontalOptions="Center">
+            <!--<Label Text="Add Service Type" FontSize="18" />-->
+            <Entry Text="{Binding AddServiceTypeDetail.ServiceType}" HeightRequest="50" WidthRequest="280" Placeholder="Service Type" FontAttributes="Bold"/>
+        </VerticalStackLayout>
+
+        <HorizontalStackLayout HorizontalOptions="Center">
+            <Button  
+              Margin="20,5" Text="Save"
+              FontSize="20" WidthRequest="150"             
+              Command="{Binding AddServiceTypeCommand}">
+            </Button>
+        </HorizontalStackLayout>
+
+    </VerticalStackLayout>
+
+</toolkit:Popup>

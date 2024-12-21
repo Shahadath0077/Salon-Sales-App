@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="SalonAccountSystem.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:SalonAccountSystem"
+    xmlns:view="clr-namespace:SalonAccountSystem.Views"
+    FlyoutBackgroundColor="AliceBlue"
+    Shell.FlyoutBehavior="Flyout"
+    Shell.TabBarBackgroundColor="LightBlue"
+    Shell.BackgroundColor="LightBlue">
+
+    <!--<ShellContent
+        Title="Home"
+        ContentTemplate="{DataTemplate local:MainPage}"
+        Route="MainPage" />-->
+
+    <!--<ShellContent
+         Title="Home"
+         FlyoutItemIsVisible="False"            
+         Shell.FlyoutBehavior="Disabled"
+         ContentTemplate="{DataTemplate local:MainPage}"
+         Route="MainPage" />-->
+
+
+    <ShellContent
+      Title="Home"
+      FlyoutItemIsVisible="False"            
+      Shell.FlyoutBehavior="Disabled"
+      ContentTemplate="{DataTemplate view:LoginPage}"
+      Route="login" />
+
+
+    <TabBar>
+        <Tab Title="Home" Icon="home.png">
+            <ShellContent ContentTemplate="{DataTemplate view:HomePage}" Route="home"/>
+        </Tab>
+
+        <Tab Title="Sales" Icon="dollar.png">
+            <ShellContent ContentTemplate="{DataTemplate view:SalesPage}" Route="sales"/>
+        </Tab>
+
+        <Tab Title="Settings" Icon="gear.png">
+            <ShellContent ContentTemplate="{DataTemplate view:SettingsPage}" Route="settings"/>
+        </Tab>
+    </TabBar>
+
+
+
+
+    <MenuItem>
+        <Shell.MenuItemTemplate>
+            <DataTemplate>
+                <Grid ColumnDefinitions="*"
+                      RowDefinitions="*,*">                            
+                    <VerticalStackLayout BackgroundColor="Bisque" HeightRequest="160">
+                        <Image 
+                         Grid.Row="0" 
+                         Grid.Column="0"  
+                         Margin="20,20"
+                         Source="salon.png"                       
+                         HeightRequest="60"
+                         WidthRequest="60"                            
+                         HorizontalOptions="Center" />
+                        <Label  
+                         Grid.Row="1"  
+                         Grid.Column="0"
+                         Margin="0,15"
+                         Text="Salon Slaes App" 
+                         TextTransform="Uppercase"
+                         FontSize="17"
+                         FontAttributes="Bold" 
+                         HorizontalTextAlignment="Center"/>
+
+                    </VerticalStackLayout>
+                   
+                </Grid>
+            </DataTemplate>
+        </Shell.MenuItemTemplate>
+    </MenuItem>
+
+    <MenuItem
+        Command="{Binding AboutCommand}">
+        <Shell.MenuItemTemplate>
+            <DataTemplate>
+                <Grid ColumnDefinitions="*,*"
+                      RowDefinitions="*,*"                       
+                      Margin="0,20">
+                    <HorizontalStackLayout Spacing="1">
+                        <Image 
+                            Grid.Row="0" 
+                            Grid.Column="0"  
+                            Margin="20,0"
+                            Source="category.png"                       
+                            HeightRequest="30"
+                            WidthRequest="30"/>
+                        <Label  
+                            Grid.Row="0"  
+                            Grid.Column="1"
+                            Text="About" 
+                            FontSize="17"
+                            FontAttributes="Bold"  />
+                       
+                    </HorizontalStackLayout>
+                    <BoxView 
+                         Grid.Row="1"  
+                         Grid.ColumnSpan="2"                     
+                         HeightRequest="1" 
+                         Margin="0,10"
+                         Color="Gray" />
+                </Grid>
+            </DataTemplate>
+        </Shell.MenuItemTemplate>
+    </MenuItem>
+    
+    <MenuItem
+     Command="{Binding LogoutCommand}">
+        <Shell.MenuItemTemplate>
+            <DataTemplate>
+                <Grid ColumnDefinitions="*,*"
+                   RowDefinitions="*,*">
+                    <HorizontalStackLayout >
+                        <Image 
+                         Grid.Row="0" 
+                         Grid.Column="0"  
+                         Margin="20,0"
+                         Source="logout.png"                       
+                         HeightRequest="30"
+                         WidthRequest="30"/>
+                        <Label  
+                         Grid.Row="0"  
+                         Grid.Column="1"
+                         Text="Log Out" 
+                         FontSize="17"
+                         FontAttributes="Bold"  />
+                    </HorizontalStackLayout>
+                    <BoxView 
+                      Grid.Row="1"  
+                      Grid.ColumnSpan="2"                     
+                      HeightRequest="1" 
+                      Margin="0,10"
+                      Color="Gray" />
+                </Grid>
+            </DataTemplate>
+        </Shell.MenuItemTemplate>
+    </MenuItem>
+    
+        
+    
+    <!--<MenuItem
+       Text="About"             
+       IconImageSource="category.png"  
+       Command="{Binding AboutCommand}">
+    </MenuItem>
+    <MenuItem
+       Text="Log Out"             
+       IconImageSource="logout.png"  
+       Command="{Binding LogoutCommand}">
+    </MenuItem>-->
+
+</Shell>

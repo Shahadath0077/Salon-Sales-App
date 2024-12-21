@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SalonAccountSystem.Views.SettingsPage"
+             xmlns:models="clr-namespace:SalonAccountSystem.Models"
+             xmlns:viewModels="clr-namespace:SalonAccountSystem.ViewModels"
+             Title="Settings"
+             BackgroundColor="AliceBlue">
+    
+    <VerticalStackLayout >
+
+        <Button Margin="30,40"              
+                Text="Change Password" FontSize="20" 
+                HeightRequest="60" TextColor="Black"
+                BackgroundColor="DarkOrange"
+                Command="{Binding ShowChangePasswordPopupCommand}" />
+
+        <Button Margin="30,0" 
+                Text="Add Service Type" FontSize="20" 
+                HeightRequest="60" TextColor="Black"           
+                BackgroundColor="DarkOrange"
+                Command="{Binding ShowServiceTypePopupCommand}" />
+
+
+        <Label Margin="30,20" Text="List of Service Type" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Start" TextColor="Gray" />
+
+
+        <CollectionView Margin="30,0" ItemsSource="{Binding ServiceTypeList}" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:AddServiceTypeModel">
+                    <Frame CornerRadius="0" BackgroundColor="Transparent">
+                      <VerticalStackLayout>
+                          <HorizontalStackLayout HorizontalOptions="Start">
+                              <Image Margin="10,0" Source="category.png"/>
+                              <Label  Text="{Binding ServiceType}" FontSize="18" FontAttributes="Bold" />
+                         
+                          </HorizontalStackLayout>
+                          
+                      </VerticalStackLayout>
+
+                        <Frame.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:SettingsPageViewModel}},Path=DisplayActionCommand}"
+                                                  CommandParameter="{Binding .}" />
+                        </Frame.GestureRecognizers>
+
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+        </CollectionView>
+
+
+    </VerticalStackLayout>
+</ContentPage>
