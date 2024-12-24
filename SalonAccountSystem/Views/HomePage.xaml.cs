@@ -24,8 +24,23 @@ public partial class HomePage : ContentPage
         base.OnAppearing();
         _homePageViewModel.GetSalesListCommand.Execute(null);
     }
+    //protected override bool OnBackButtonPressed()
+    //{
+    //     return true;
+    //}
+
     protected override bool OnBackButtonPressed()
     {
+        Dispatcher.Dispatch(async () =>
+        {
+            var answer = await DisplayAlert("Exit Confirmation", "Are you sure you want to exit the app?", "Yes", "No");
+            if (answer)
+            {
+                //await Navigation.PushAsync(new MainPage()); 
+                Application.Current.Quit();
+            }
+        });
         return true;
     }
+
 }
