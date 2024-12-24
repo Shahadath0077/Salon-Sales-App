@@ -93,6 +93,9 @@ namespace SalonAccountSystem.ViewModels
             }
             else if (response == "Delete")
             {
+                bool answer = await Shell.Current.DisplayAlert("Confirm Operation", $"Are you sure you want to delete {dailySalesModel.SalesType}?", "Yes", "No");
+                if (!answer) return;
+
                 var delResponse = await _dailySalesService.DeleteSales(dailySalesModel);
                 if (delResponse > 0)
                 {
