@@ -141,6 +141,9 @@ namespace SalonAccountSystem.ViewModels
 
             if (response== "Delete")
             {
+                bool answer = await Shell.Current.DisplayAlert("Confirm Operation", $"Are you sure you want to delete {addServiceTypeModel.ServiceType}?", "Yes", "No");
+                if (!answer) return;
+
                 var delResponse = await _addServiceTypeService.DeleteServiceType(addServiceTypeModel);
                 if (delResponse > 0)
                 {
