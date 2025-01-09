@@ -21,7 +21,7 @@
                                     <Label Margin="0,12" Text="{Binding SalesMonth}" FontSize="20" FontAttributes="Bold" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout HorizontalOptions="EndAndExpand" Spacing="30">
-                                    <Label  Margin="0,-40" Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="20" FontAttributes="Bold" TextColor="Red"/>
+                                    <Label  Margin="0,-40" Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="20" FontAttributes="Bold" TextColor="Blue"/>
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
 

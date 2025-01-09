@@ -45,7 +45,7 @@
                                         <Label  Text="{Binding SalesDate,StringFormat='{0:hh:mm:ss}'}" FontSize="16" FontAttributes="Bold" TextColor="gray"/>
                                     </StackLayout>
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="0" Grid.Column="2" >
-                                        <Label  Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Red"/>
+                                        <Label  Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Blue"/>
                                     </StackLayout>
                                 </Grid>
                             </VerticalStackLayout>

@@ -22,7 +22,7 @@
                 Command="{Binding ShowServiceTypePopupCommand}" />
 
 
-        <Label Margin="30,20" Text="List of Service Type" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Start" TextColor="Gray" />
+        <Label Margin="30,20" Text="List of Service Type" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Start" TextColor="Gray" />
 
 
         <CollectionView Margin="30,0" ItemsSource="{Binding ServiceTypeList}" >

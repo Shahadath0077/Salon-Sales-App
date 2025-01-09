@@ -98,7 +98,7 @@
                             Grid.Row="0"  
                             Grid.Column="1"
                             Text="About" 
-                            FontSize="17"
+                            FontSize="16"
                             FontAttributes="Bold"  />
                        
                     </HorizontalStackLayout>
@@ -131,7 +131,7 @@
                          Grid.Row="0"  
                          Grid.Column="1"
                          Text="Log Out" 
-                         FontSize="17"
+                         FontSize="16"
                          FontAttributes="Bold"  />
                     </HorizontalStackLayout>
                     <BoxView 
