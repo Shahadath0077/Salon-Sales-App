@@ -1,5 +1,8 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.Maui.Controls;
 using SalonAccountSystem.Models;
 using SalonAccountSystem.Services;
 using SalonAccountSystem.Views;
@@ -12,12 +15,21 @@ using System.Threading.Tasks;
 
 namespace SalonAccountSystem.ViewModels
 {
-    [QueryProperty(nameof(SalesDetail), "SalesDetail")] 
+    [QueryProperty(nameof(SalesDetail), "SalesDetail")]
+    [QueryProperty(nameof(MonthlySalesDetail), "MonthlySalesDetail")]
     public partial class AddUpdateSalesPageViewModel : ObservableObject
     {
+
+        public ObservableCollection<DailySalesModel> DailySalesList { get; set; } = new ObservableCollection<DailySalesModel>();
+        public ObservableCollection<DailySalesGroupModel> MonthlyGroupSalesList { get; set; } = new ObservableCollection<DailySalesGroupModel>();
+
+        [ObservableProperty]
+        private DailySalesModel _monthlySalesDetail = new DailySalesModel();
+
+
         public ObservableCollection<DailySalesModel> MonthlySalesList { get; set; } = new ObservableCollection<DailySalesModel>();
 
-         public ObservableCollection<AddServiceTypeModel> ServiceTypeList { get; set; } = new ObservableCollection<AddServiceTypeModel>();
+        public ObservableCollection<AddServiceTypeModel> ServiceTypeList { get; set; } = new ObservableCollection<AddServiceTypeModel>();
 
 
         [ObservableProperty]
@@ -28,70 +40,88 @@ namespace SalonAccountSystem.ViewModels
 
         private readonly IDailySalesService _dailySalesService;
         private DailySalesModel _dailySalesModel { get; set; }
+       // private LoginPageViewModel _loginPageViewModel;
+
+        private SettingsPageViewModel _settingsPageViewModel;
+
 
         private readonly IAddServiceTypeService _addServiceTypeService;
-        public AddUpdateSalesPageViewModel(IDailySalesService dailySalesService, IAddServiceTypeService addServiceTypeService)
+        public AddUpdateSalesPageViewModel(IDailySalesService dailySalesService, IAddServiceTypeService addServiceTypeService, SettingsPageViewModel settingsPageViewModel)
         {
             _dailySalesService = dailySalesService;
-            _addServiceTypeService= addServiceTypeService;
-            _dailySalesModel = new DailySalesModel();
-            
+            _addServiceTypeService = addServiceTypeService;
+            _dailySalesModel = new DailySalesModel(); 
+            _settingsPageViewModel = settingsPageViewModel;
         }
 
         [RelayCommand]
         public async Task AddUpdateSales()
-        { 
+        {
             try
-            {              
+            {
                 int response = -1;
+                string message = "";
+                // Update the sales
                 if (SalesDetail.SalesId > 0)
-                {                    
-                    SalesDetail.SalesType = SelelctedServiceType.ServiceType;
+                { 
                     response = await _dailySalesService.UpdateSales(SalesDetail);
                     if (response > 0)
                     {
                         SelelctedServiceType = new AddServiceTypeModel();
                         SalesDetail = new DailySalesModel();
-                        await Shell.Current.DisplayAlert("Message", "Sales updated successfully!", "OK");
+
+                        message = "Sales updated successfully!";
+                        await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show(); 
                     }
                     else
                     {
                         await Shell.Current.DisplayAlert("Heads Up!", "Something went wrong while updating sales", "OK");
-                    }                                        
+                    }
                 }
                 else
-                {                    
-                    if (!string.IsNullOrWhiteSpace(SelelctedServiceType.ServiceType) && !string.IsNullOrWhiteSpace(SalesDetail.SalesDate.ToString()) && (SalesDetail.Amount != null))
+                {
+                    // add new sales                                       
+                        if (SalesDetail.SalesType!="Select a service" && !string.IsNullOrWhiteSpace(SalesDetail.SalesDate.ToString()) && SalesDetail.Amount!= null)
                         {
-                        response = await _dailySalesService.AddSales(new Models.DailySalesModel
+                        response = await _dailySalesService.AddSales(new DailySalesModel
                         {
                             SalesDate = SalesDetail.SalesDate,
-                            Amount = SalesDetail.Amount,
-                            SalesType = SelelctedServiceType.ServiceType,
+                            Amount = SalesDetail.Amount,                           
+                            SalesType = SalesDetail.SalesType,
+
                         });
 
                         if (response > 0)
                         {
+                            await _settingsPageViewModel.ShowSpinner();
                             SelelctedServiceType = new AddServiceTypeModel();
                             SalesDetail = new DailySalesModel();
-                            await Shell.Current.DisplayAlert("Message", "Sales saved successfully!", "OK");
-                        }
-                        else
-                        {
-                            await Shell.Current.DisplayAlert("Heads Up!", "Something went wrong while adding expenses", "OK");
+                            message = "Sales saved successfully!";
+                            await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
+
                         }
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Message", "Enter all the required fields!", "OK");
+                        if (SalesDetail.SalesType == "Select a service")
+                        {
+                             message = "Please select service!";
+                        }
+                        if (SalesDetail.Amount == null)
+                        {
+                             message = "Please enter amount!";
+                        }
+                        await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
                     }
-                }               
+                }
             }
             catch (Exception ex)
-            {
-                await Shell.Current.DisplayAlert("Message", "Please select a service", "OK");                
+            {  
+                string message = "Please select a service!";
+                await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
             }
         }
+
         [RelayCommand]
         public async Task GetServiceTypeList()
         {
@@ -117,5 +147,12 @@ namespace SalonAccountSystem.ViewModels
                 Console.WriteLine(ex.ToString());
             }
         }
-    }
+
+        [RelayCommand]
+        public async Task ServiceList()
+        {
+            ServiceListPopup popup = new ServiceListPopup(this);
+            Application.Current?.MainPage?.ShowPopup(popup);
+        }   
+    }   
 }

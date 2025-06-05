@@ -23,12 +23,20 @@
          Route="MainPage" />-->
 
 
-    <ShellContent
+    <!--<ShellContent
+     Title="Home"
+     FlyoutItemIsVisible="False"            
+     Shell.FlyoutBehavior="Disabled"
+     ContentTemplate="{DataTemplate local:HomePage}"
+     Route="HomePage" />-->
+
+
+    <!--<ShellContent
       Title="Home"
       FlyoutItemIsVisible="False"            
       Shell.FlyoutBehavior="Disabled"
       ContentTemplate="{DataTemplate view:LoginPage}"
-      Route="login" />
+      Route="login" />-->
 
 
     <TabBar>
@@ -66,7 +74,7 @@
                          Grid.Row="1"  
                          Grid.Column="0"
                          Margin="0,15"
-                         Text="Salon Slaes App" 
+                         Text="SalonApp" 
                          TextTransform="Uppercase"
                          FontSize="17"
                          FontAttributes="Bold" 
@@ -113,7 +121,7 @@
         </Shell.MenuItemTemplate>
     </MenuItem>
     
-    <MenuItem
+    <!--<MenuItem
      Command="{Binding LogoutCommand}">
         <Shell.MenuItemTemplate>
             <DataTemplate>
@@ -143,7 +151,7 @@
                 </Grid>
             </DataTemplate>
         </Shell.MenuItemTemplate>
-    </MenuItem>
+    </MenuItem>-->
     
         
     

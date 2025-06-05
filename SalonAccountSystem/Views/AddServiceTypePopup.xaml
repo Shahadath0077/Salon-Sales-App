@@ -4,38 +4,43 @@
              xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="SalonAccountSystem.Views.AddServiceTypePopup"
              Size="320,250"              
-             Color="AliceBlue">
-    
-    <VerticalStackLayout>
+             Color="Transparent">
 
-        <HorizontalStackLayout BackgroundColor="Bisque">
-            <Image Margin="10,0" Source="category.png" WidthRequest="30" HeightRequest="30" />
-            <Label
+
+    <Border Stroke="Transparent" BackgroundColor="white">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="25"/>
+        </Border.StrokeShape>
+        <VerticalStackLayout>
+
+            <HorizontalStackLayout BackgroundColor="Bisque">
+                <Image Margin="10,0" Source="category.png" WidthRequest="30" HeightRequest="30" />
+                <Label
                 Margin="10,20" Text="Service Type" 
                 HorizontalOptions="StartAndExpand" FontSize="16"
                 FontAttributes="Bold"/>
 
-            <Button  
-                Margin="110,0"   ImageSource="x_close.png"                          
+                <Button  
+                Margin="100,0"   ImageSource="x_close.png"                          
                 BackgroundColor="Transparent"  FontAttributes="Bold"
                 WidthRequest="50" HeightRequest="60"
-                HorizontalOptions="End" Clicked="Button_Clicked">
-            </Button>
-        </HorizontalStackLayout>
+                HorizontalOptions="End" Clicked="CloseButton_Clicked">
+                </Button>
+            </HorizontalStackLayout>
 
-        <VerticalStackLayout Margin="20,15" HorizontalOptions="Center">
-            <!--<Label Text="Add Service Type" FontSize="18" />-->
-            <Entry Text="{Binding AddServiceTypeDetail.ServiceType}" HeightRequest="50" WidthRequest="280" Placeholder="Service Type" FontAttributes="Bold"/>
+            <VerticalStackLayout Margin="20,15" HorizontalOptions="Center">
+                <Entry x:Name="serviceName" Text="{Binding AddServiceTypeDetail.ServiceType}" HeightRequest="50" WidthRequest="280" Placeholder="Service Type" FontAttributes="Bold"/>
+            </VerticalStackLayout>
+
+            <HorizontalStackLayout HorizontalOptions="Center">
+                <Button  
+                  Margin="20,20" Text="Save"
+                  FontSize="20" WidthRequest="150"  
+                  Clicked="CloseButton_Clicked"
+                  Command="{Binding AddServiceTypeCommand}"/>
+
+            </HorizontalStackLayout>
+
         </VerticalStackLayout>
-
-        <HorizontalStackLayout HorizontalOptions="Center">
-            <Button  
-              Margin="20,5" Text="Save"
-              FontSize="20" WidthRequest="150"             
-              Command="{Binding AddServiceTypeCommand}">
-            </Button>
-        </HorizontalStackLayout>
-
-    </VerticalStackLayout>
-
+    </Border>
 </toolkit:Popup>

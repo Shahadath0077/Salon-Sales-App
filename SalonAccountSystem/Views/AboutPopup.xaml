@@ -2,70 +2,41 @@
 <toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SalonAccountSystem.Views.AboutPopup"
-             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
-             Size="320,370"              
-             Color="White">
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"                         
+             Color="Transparent">
     
-    <VerticalStackLayout>
-        <HorizontalStackLayout  BackgroundColor="Bisque" >
-            <Image Margin="10,0" Source="category.png" WidthRequest="30" HeightRequest="30" />
+    <Border Stroke="Transparent" BackgroundColor="white" HeightRequest="200" WidthRequest="300">
+        <Border.StrokeShape>
+            <RoundRectangle CornerRadius="25"/>
+        </Border.StrokeShape>
+        <VerticalStackLayout>
 
-            <Label
-                 Margin="10,15"
-                 Text="About"                
-                 FontSize="18"
-                 FontAttributes="Bold"/>
+            <HorizontalStackLayout BackgroundColor="Bisque" VerticalOptions="Center" >
+                <Image Margin="10,0" Source="category.png" WidthRequest="30" HeightRequest="30" />
+                <Label Margin="10,20" Text="SalonApp" HorizontalOptions="StartAndExpand" FontSize="16" FontAttributes="Bold"/>
+                <Button  
+                    Margin="80,0"  ImageSource="x_close.png"                          
+                    BackgroundColor="Transparent" FontAttributes="Bold"
+                    WidthRequest="50" HeightRequest="60" HorizontalOptions="End"
+                    Clicked="Button_Clicked"/>
+            </HorizontalStackLayout>
 
-            <Button  
-                Margin="120,0"               
-                ImageSource="x_close.png"                          
-                BackgroundColor="Transparent"                
-                FontAttributes="Bold"
-                WidthRequest="50"
-                HeightRequest="60"
-                HorizontalOptions="End"   
-                Clicked="Button_Clicked">
-            </Button>
+            
+            <Label 
+             Margin="0,5" Text="Version: v3.0.1" FontSize="18"
+             VerticalOptions="Center" HorizontalOptions="Center" />
+            <Label 
+              Margin="0,5" Text="License: Free" FontSize="16"
+              VerticalOptions="Center" HorizontalOptions="Center" />
+            <Label 
+             Margin="0,5" Text="Md Shahadath Sarker" FontSize="16"
+             VerticalOptions="Center" HorizontalOptions="Center" />
+            <Label 
+             Margin="0,5" Text="sarker0077@yahoo.com" FontSize="16"
+             VerticalOptions="Center" HorizontalOptions="Center" />
 
-        </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Border>
 
-        <Frame Margin="20,15" BackgroundColor="Beige" 
-               CornerRadius="20" BorderColor="maroon">
 
-            <VerticalStackLayout>
-                <Image Source="salon.png"
-                     Margin="0,2"
-                     HeightRequest="60"  
-                     WidthRequest="60"                     
-                     HorizontalOptions="Center"/>
-                <Label 
-                    Margin="10,10"
-                    FontSize="20"
-                    FontAttributes="Bold"
-                    Text="Salon Sales App"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center" />
-                <Label 
-                    Margin="0,2"
-                    Text="Version: v3.0.1"
-                    FontSize="18"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center" />
-                <Label 
-                     Margin="0,8"
-                     Text="License: Free"
-                     FontSize="18"
-                     VerticalOptions="Center" 
-                     HorizontalOptions="Center" />
-                <Label 
-                    Margin="0,10"
-                    Text="Md Shahadath Sarker"
-                    FontSize="18"
-                    FontAttributes="Bold"
-                    VerticalOptions="Center" 
-                    HorizontalOptions="Center" />
-
-            </VerticalStackLayout>
-        </Frame>
-    </VerticalStackLayout>
 </toolkit:Popup>

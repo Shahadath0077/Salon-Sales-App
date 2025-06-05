@@ -1,30 +1,34 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="SalonAccountSystem.Views.SalesDetailPage"
+             x:Class="SalonAccountSystem.Views.SalesDetailPopup"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              xmlns:models="clr-namespace:SalonAccountSystem.Models"
              xmlns:viewModels="clr-namespace:SalonAccountSystem.ViewModels"
-             Title="Sales Detail">
+             Size="420,840"
+             Color="AliceBlue">
 
     <ScrollView>
 
         <VerticalStackLayout>
-            <HorizontalStackLayout Spacing="20" HorizontalOptions="Start" >
-                <Image Margin="10,-20" Source="calendar.png" />
-                <Label Margin="3,20"  Text="{Binding SalesReportDetail.SalesMonth}" FontSize="20" TextColor="Maroon" FontAttributes="Bold" />
+            <HorizontalStackLayout BackgroundColor="Bisque" HeightRequest="60" >
+                <Label  Margin="20,18" Text="Manage Sales" FontSize="18" />
+                <Button 
+                     Margin="70,0" ImageSource="x_close.png" Text="CANCEL" TextColor="Red" BackgroundColor="Transparent" 
+                     WidthRequest="130" HeightRequest="50"  FontSize="16" Clicked="Button_Clicked" />
             </HorizontalStackLayout>
 
             <CollectionView Margin="10,8" ItemsSource="{Binding DailySalesGroupList}" IsGrouped="True" >
 
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate x:DataType="models:DailySalesDetailGroupModel">
-                        <Frame Margin="0,2" Padding="10" HeightRequest="50" BorderColor="Transparent" BackgroundColor="Bisque" >
+                        <Frame Margin="0,2" Padding="10" HeightRequest="50" BackgroundColor="Transparent" BorderColor="Transparent" >
                             <VerticalStackLayout>
                                 <HorizontalStackLayout HorizontalOptions="Start">
-                                    <Label Text="{Binding SalesDate,StringFormat='{0:d}'}" FontSize="18" TextColor="Black" FontAttributes="Bold" />
+                                    <Label Text="{Binding SalesDate,StringFormat='{0:d}'}" FontSize="18" TextColor="Blue" FontAttributes="Bold" />
                                 </HorizontalStackLayout>
                                 <HorizontalStackLayout HorizontalOptions="EndAndExpand">
-                                    <Label  Margin="0,-25" Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Black"/>
+                                    <Label  Margin="0,-25" Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Blue"/>
                                 </HorizontalStackLayout>
                             </VerticalStackLayout>
                         </Frame>
@@ -33,33 +37,39 @@
 
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:DailySalesModel">
-                        <Frame Margin="0" Padding="15" CornerRadius="1">
+                        <Frame Margin="5" Padding="15" CornerRadius="1" BorderColor="Transparent" BackgroundColor="Beige">
 
                             <VerticalStackLayout>
-                                <Grid RowDefinitions="*" ColumnDefinitions="*, *,*" ColumnSpacing="80">
+
+                                <Grid RowDefinitions="*" ColumnDefinitions="*, *,*">
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="Start" Grid.Row="0" Grid.Column="0" >
-                                        <Image Margin="5,0" Source="category.png"/>
+                                        <Image Margin="2,0" Source="category.png"/>
                                         <Label Text="{Binding SalesType}" FontSize="16" FontAttributes="Bold" />
                                     </StackLayout>
+
                                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" >
                                         <Label  Text="{Binding SalesDate,StringFormat='{0:hh:mm:ss}'}" FontSize="16" FontAttributes="Bold" TextColor="gray"/>
                                     </StackLayout>
-                                    <StackLayout Orientation="Horizontal" HorizontalOptions="End" Grid.Row="0" Grid.Column="2" >
-                                        <Label  Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Blue"/>
+
+                                    <StackLayout Orientation="Horizontal" HorizontalOptions="EndAndExpand" Grid.Row="0" Grid.Column="2" >
+                                        <Label  Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="16" FontAttributes="Bold"/>
                                     </StackLayout>
+
                                 </Grid>
                             </VerticalStackLayout>
 
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:SalesDetailPageViewModel}},Path=DisplayActionCommand}"
-                                                      CommandParameter="{Binding .}" />
+                                                  CommandParameter="{Binding .}" />
                             </Frame.GestureRecognizers>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
 
             </CollectionView>
+            
         </VerticalStackLayout>
+        
     </ScrollView>
 
-</ContentPage>
+</toolkit:Popup>

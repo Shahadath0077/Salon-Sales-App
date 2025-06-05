@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="SalonAccountSystem.Views.AddUpdateSalesPopup"
+             Size="420,840"  
+             Color="AliceBlue"
+             CanBeDismissedByTappingOutsideOfPopup="False">
+
+    <VerticalStackLayout >
+
+        <HorizontalStackLayout BackgroundColor="Bisque" Spacing="30" HeightRequest="60" >
+            <Button  HorizontalOptions="StartAndExpand"
+                     Margin="0,0" ImageSource="x_close.png" Text="CANCEL" TextColor="Red" BackgroundColor="Transparent" 
+                     WidthRequest="130" HeightRequest="50"  FontSize="16" Clicked="Button_Clicked" />
+
+            <Button  HorizontalOptions="End"
+                      Margin="80,0" ImageSource="check.png" Text="SAVE" TextColor="Green" BackgroundColor="Transparent" 
+                      WidthRequest="130" HeightRequest="50" FontSize="16" Clicked="Button_Clicked"  Command="{Binding AddUpdateSalesCommand}"/>
+        
+        </HorizontalStackLayout>
+        
+        <VerticalStackLayout Margin="20,20" Spacing="10">
+
+            <HorizontalStackLayout>
+                <Image Margin="0,0" Source="category.png" WidthRequest="25" HeightRequest="25" Background="Transparent"></Image>
+                <Button  
+                      Margin="20,0" x:Name="btnServiceType" BorderColor="Teal" BorderWidth="1" Text="{Binding SalesDetail.SalesType}" TextColor="Black" BackgroundColor="Transparent" 
+                      WidthRequest="280" HeightRequest="50" FontSize="16"  Command="{Binding ServiceListCommand}"/>
+
+            </HorizontalStackLayout>
+            
+            <!--<HorizontalStackLayout>
+
+                <Image Source="category.png" WidthRequest="25" HeightRequest="25" Background="Transparent"></Image>
+                <Picker x:Name="servicePicker"
+                     Margin="20,2"                                 
+                     Title="Select a service"                           
+                     ItemsSource ="{Binding ServiceTypeList}"                           
+                     ItemDisplayBinding="{Binding ServiceType}"
+                     SelectedItem="{Binding SelelctedServiceType}" 
+                     WidthRequest="280"
+                     FontSize="18" >
+                </Picker>
+
+            </HorizontalStackLayout>-->
+            
+            <HorizontalStackLayout>
+                <Image Margin="0,10" Source="dollar.png" WidthRequest="25" HeightRequest="25" Background="Transparent"></Image>
+                <Entry x:Name="amountEntry" Margin="20,10" Text="{Binding SalesDetail.Amount}" FontSize="18"  Keyboard="Numeric" Placeholder="Enter amount" WidthRequest="280" />
+            </HorizontalStackLayout>
+            
+            <HorizontalStackLayout>
+                <Image Source="calendar.png" WidthRequest="25" HeightRequest="25" Background="Transparent"></Image>
+                <DatePicker  Margin="20,20" Format="dd/MM/yyyy" FontSize="18" HorizontalOptions="Start" WidthRequest="120" Date="{Binding SalesDetail.SalesDate}" />
+            </HorizontalStackLayout>
+            
+        </VerticalStackLayout>
+
+    </VerticalStackLayout>
+</toolkit:Popup>
+

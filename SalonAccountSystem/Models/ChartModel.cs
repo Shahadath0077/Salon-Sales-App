@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SalonAccountSystem.Models
 {
-    public class LoginModel
+    public  class ChartModel
     {
-        public string? FullName { get; set; }
-        public string? UserName { get; set; }
-        public string? UserPassword { get; set; }
+        public string? SalesType { get; set; }
+        public double? Amount { get; set; }
+        public string? HexColor { get; set; }
     }
 }

@@ -25,13 +25,7 @@ namespace SalonAccountSystem.Services
         public async Task<List<DailySalesModel>> GetDailySalesList()
         {
             await SQLiteDbConnect.ConnectDb();
-            var salesList = await SQLiteDbConnect._dbConnection.Table<DailySalesModel>().OrderByDescending(x => x.SalesDate).ToListAsync();
-
-            //var today = DateTime.Today;
-            //items.Where(item => item.PublishDate.Date == today);
-
-            //var salesList = await SQLiteDbConnect._dbConnection.Table<DailySalesModel>().Where(x=>x.SalesDate.Date==today).OrderByDescending(x => x.SalesDate).ToListAsync();
-
+            var salesList = await SQLiteDbConnect._dbConnection.Table<DailySalesModel>().OrderByDescending(x => x.SalesDate).ToListAsync(); 
             return salesList;
         }
 

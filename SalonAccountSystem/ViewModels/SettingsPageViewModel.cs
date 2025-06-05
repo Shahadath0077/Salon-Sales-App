@@ -1,4 +1,5 @@
-﻿using CommunityToolkit.Maui.Views;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SalonAccountSystem.Models;
@@ -13,59 +14,59 @@ using System.Threading.Tasks;
 
 namespace SalonAccountSystem.ViewModels
 {
-    [QueryProperty(nameof(ChangePasswordDetail), "ChangePasswordDetail")]
     [QueryProperty(nameof(AddServiceTypeDetail), "AddServiceTypeDetail")]
+    [QueryProperty(nameof(ChangeDisplayNameDetail), "ChangeDisplayNameDetail")]
     public partial class SettingsPageViewModel : ObservableObject
-    {        
+    {
         public ObservableCollection<AddServiceTypeModel> ServiceTypeList { get; set; } = new ObservableCollection<AddServiceTypeModel>();
-
-        [ObservableProperty]
-        private ChangePasswordModel _changePasswordDetail = new ChangePasswordModel();
 
         [ObservableProperty]
         private AddServiceTypeModel _addServiceTypeDetail = new AddServiceTypeModel();
 
-        private readonly IChangePasswordService _changePasswordService;
+        [ObservableProperty]
+        private ChangeDisplayNameModel _changeDisplayNameDetail = new ChangeDisplayNameModel();
+
+       
         private readonly IAddServiceTypeService _addServiceTypeService;
-        private LoginPageViewModel _loginPageViewModel;
-        public SettingsPageViewModel(IChangePasswordService changePasswordService, IAddServiceTypeService addServiceTypeService, LoginPageViewModel loginPageViewModel)
-        {
-            _changePasswordService=changePasswordService;
+        private readonly IChangeDisplayNameService _changeDisplayNameService;
+        //private LoginPageViewModel _loginPageViewModel;
+        public SettingsPageViewModel(IAddServiceTypeService addServiceTypeService,  IChangeDisplayNameService changeDisplayNameService)
+        {           
             _addServiceTypeService = addServiceTypeService;
-            _loginPageViewModel=loginPageViewModel;
+            //_loginPageViewModel = loginPageViewModel;
+            _changeDisplayNameService = changeDisplayNameService;
         }
 
         [RelayCommand]
-        public async Task ChangePassword()
+        public async Task ChangeDisplayName()
         {
-            if (ChangePasswordDetail.NewPassword ==null || ChangePasswordDetail.ConfirmPassword == null)
+            if (ChangeDisplayNameDetail.FullName ==null)
             {
-                await Shell.Current.DisplayAlert("Message", "Please enter password", "OK");
+                string message = "Please enter name!";
+                await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
             }
             else
             {
-                if (ChangePasswordDetail.NewPassword != ChangePasswordDetail.ConfirmPassword)
+                await ShowSpinner();
+
+                var response = await _changeDisplayNameService.ChangeDisplayName(new ChangeDisplayNameModel
                 {
-                    await Shell.Current.DisplayAlert("Message", "Password Mismatched, Try Again!", "OK");
+                    FullName = ChangeDisplayNameDetail.FullName,
+                });
+
+
+                if (response > 0)
+                {
+                    string message = "Name changed  successfully!";
+                    await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
                 }
                 else
                 {
-                    await _loginPageViewModel.ShowSpinner();
-                    var response = await _changePasswordService.ChangePassword(new ChangePasswordModel
-                    {
-                        NewPassword = ChangePasswordDetail.NewPassword,
-                    });
-                    if (response > 0)
-                    {
-                        await Shell.Current.DisplayAlert("Message", "Password changed  successfully!", "OK");  
-                    }
-                    else
-                    {
-                        await Shell.Current.DisplayAlert("Message", "Password changed failed!", "OK");
-                    }
-                }                   
+                    await Shell.Current.DisplayAlert("Message", "Name changed failed!", "OK");
+                }
+                
             }
-            ChangePasswordDetail = new ChangePasswordModel();
+            ChangeDisplayNameDetail = new ChangeDisplayNameModel();
         }
 
         [RelayCommand]
@@ -73,19 +74,22 @@ namespace SalonAccountSystem.ViewModels
         {
             if (AddServiceTypeDetail.ServiceType == null)
             {
-                await Shell.Current.DisplayAlert("Message", "Please enter service type", "OK");
+                string mesage = "Please enter service type!";
+                await Toast.Make(mesage, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
+
             }
             else
-            {
-                await _loginPageViewModel.ShowSpinner();
+            {   
+                await ShowSpinner();
                 var response = await _addServiceTypeService.AddServiceType(new AddServiceTypeModel
                 {
                     ServiceType = AddServiceTypeDetail.ServiceType
                 });
                 if (response > 0)
                 {
-                    await GetServiceTypeList();
-                    await Shell.Current.DisplayAlert("Message", "Service type added  successfully!", "OK");
+                    await GetServiceTypeList();                   
+                    string mesage= "Service type added  successfully!";
+                    await Toast.Make(mesage,CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
                 }
                 else
                 {
@@ -121,9 +125,9 @@ namespace SalonAccountSystem.ViewModels
         }
 
         [RelayCommand]
-        public void ShowChangePasswordPopup()
+        public void ShowChangeDisplayNamePopup()
         {
-            ChangePasswordPopup popup = new ChangePasswordPopup(this);
+            ChangeDisplayNamePopup popup = new ChangeDisplayNamePopup(this);
             Application.Current?.MainPage?.ShowPopup(popup);
         }
 
@@ -131,13 +135,13 @@ namespace SalonAccountSystem.ViewModels
         public void ShowServiceTypePopup()
         {
             AddServiceTypePopup popup = new AddServiceTypePopup(this);
-            Application.Current?.MainPage?.ShowPopup(popup);
+            Application.Current?.MainPage?.ShowPopupAsync(popup);
         }
 
         [RelayCommand]
         public async Task DisplayAction(AddServiceTypeModel addServiceTypeModel)
         {
-            var response = await AppShell.Current.DisplayActionSheet("Delete Service Type?", "OK", null, "Delete");
+            var response = await AppShell.Current.DisplayActionSheet("Delete Service Type?", "Cancel", null, "Delete");
 
             if (response== "Delete")
             {
@@ -147,11 +151,20 @@ namespace SalonAccountSystem.ViewModels
                 var delResponse = await _addServiceTypeService.DeleteServiceType(addServiceTypeModel);
                 if (delResponse > 0)
                 {
-                    await Shell.Current.DisplayAlert("Message", "Service Type deleted successfully!", "OK");
+                    string mesage = "Service type deleted successfully!";
+                    await Toast.Make(mesage, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
                     await GetServiceTypeList();
                 }
             }
   
+        }
+
+        public async Task ShowSpinner()
+        {
+            var popup = new SpinnerPopup();
+            Application.Current?.MainPage?.ShowPopup(popup);
+            await new TaskFactory().StartNew(() => { Thread.Sleep(1000); });
+            popup.Close();
         }
     }
 }

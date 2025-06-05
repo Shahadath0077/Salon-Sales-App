@@ -12,7 +12,8 @@ namespace SalonAccountSystem.Models
     {
         [PrimaryKey, AutoIncrement]
         public int SalesId { get; set; }
-        public string? SalesType { get; set; }
+        [ObservableProperty]
+        public string? salesType= "Select a service";
         public double? Amount { get; set; }
         public DateTime SalesDate { get; set; } = DateTime.Now;
         public double? GroupTotalAmount { get; set; }
@@ -20,18 +21,28 @@ namespace SalonAccountSystem.Models
         public double showTotalAmount = 0;
         [ObservableProperty]
         public double totalRecords = 0;
-       // [ObservableProperty]
-       // public string salesMonth;
+        [ObservableProperty]
+        public string? percentage = "";
+        [ObservableProperty]
+        public bool? isLayoutVisible=false;
+        [ObservableProperty]
+        public bool? isTotalAmountVisible = false;
+        public string? SalesMonth { get; set; }
 
     }
     public class DailySalesGroupModel : List<DailySalesModel>
     {
         public string? SalesType { get; set; }
-        public double? Amount { get; set; }     
-        public DailySalesGroupModel(string salesType, List<DailySalesModel> salesList) : base(salesList)
+        public double? Amount { get; set; }
+        public double TotalAmount { get; set; }       
+        public string? Percentage { get; set; }
+
+      
+        public DailySalesGroupModel(string salesType, List<DailySalesModel> salesList, double totalAmount) : base(salesList)
         {
             SalesType = salesType;
             Amount = salesList.Where(x => x.Amount.HasValue).Sum(x => x.Amount.Value);
+            Percentage = String.Format("{0:0.0#}", (Amount / totalAmount) * 100);
         }
     }
 

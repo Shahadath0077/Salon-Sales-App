@@ -16,6 +16,8 @@ public partial class AboutPopup : Popup
 
     private void Button_Clicked(object sender, EventArgs e)
     {
+        //Shell.Current.FlyoutBehavior = FlyoutBehavior.Flyout;
         this.Close();   
+
     }
 }

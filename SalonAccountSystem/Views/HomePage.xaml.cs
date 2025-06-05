@@ -1,3 +1,5 @@
+
+using SalonAccountSystem.Models;
 using SalonAccountSystem.ViewModels;
 
 
@@ -13,15 +15,18 @@ public partial class HomePage : ContentPage
         _homePageViewModel = homePageViewModel;
         this.BindingContext = _homePageViewModel;
 
-        if (App.loginModel != null)
-        {
-            lblUserFullName.Text = App.loginModel.FullName;           
-        }
+        //if (App.loginModel != null)
+        //{
+        //    lblUserFullName.Text = App.loginModel.FullName;
+        //}
+        DataRefreshTimer();
     }
     protected override void OnAppearing()
     {
         base.OnAppearing();
         _homePageViewModel.GetSalesListCommand.Execute(null);
+        _homePageViewModel.GetNameCommand.Execute(null);
+        
     }  
     protected override bool OnBackButtonPressed()
     {
@@ -31,8 +36,27 @@ public partial class HomePage : ContentPage
             if (answer)
             {                
                 Application.Current.Quit();
+
+                
             }
         });
         return true;
     }
+
+
+    private  void DataRefreshTimer()
+    {     
+        Dispatcher.StartTimer(TimeSpan.FromSeconds(15), () =>
+        {
+            MainThread.BeginInvokeOnMainThread(() =>
+            {
+                _homePageViewModel.GetSalesListCommand.Execute(null);
+                 
+            });
+            return true;
+        });
+    }
+
+    
+
 }

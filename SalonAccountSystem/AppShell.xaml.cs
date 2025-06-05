@@ -25,19 +25,15 @@ namespace SalonAccountSystem
 
 
             this.BindingContext = new AppShellViewModel();
-            Routing.RegisterRoute("login", typeof(LoginPage));
-            Routing.RegisterRoute("registration", typeof(RegistrationPage));   
+            //Routing.RegisterRoute("login", typeof(LoginPage));
+            //Routing.RegisterRoute("registration", typeof(RegistrationPage));   
             Routing.RegisterRoute("home", typeof(HomePage));
             Routing.RegisterRoute("sales", typeof(SalesPage));
             Routing.RegisterRoute("settings", typeof(SettingsPage));
-
-            Routing.RegisterRoute("//salesdetailpage/addupdatesales", typeof(AddUpdateSalesPage));
+            //Routing.RegisterRoute("//salesdetailpage/addupdatesales", typeof(AddUpdateSalesPage));            
+            //Routing.RegisterRoute("salesdetailpage", typeof(SalesDetailPage));
 
            
-
-            Routing.RegisterRoute("changepasswordpopup", typeof(ChangePasswordPopup));
-            Routing.RegisterRoute("addservicetypepopup", typeof(AddServiceTypePopup));
-            Routing.RegisterRoute("salesdetailpage", typeof(SalesDetailPage));
 
         }
     }

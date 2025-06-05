@@ -10,11 +10,15 @@ public partial class SalesPage : ContentPage
 		InitializeComponent();
         _salesPageViewModel = salesPageViewModel;
         this.BindingContext = _salesPageViewModel;   
+
+
     }
     protected override void OnAppearing()
     {
         base.OnAppearing();
-        _salesPageViewModel.GetMonthlySalesListCommand.Execute(null);      
+        _salesPageViewModel.GetMonthlySalesListCommand.Execute(null); 
+        
+
     }
     protected override bool OnBackButtonPressed()
     {

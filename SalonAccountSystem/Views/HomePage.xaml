@@ -4,60 +4,112 @@
              x:Class="SalonAccountSystem.Views.HomePage"
              xmlns:models="clr-namespace:SalonAccountSystem.Models"
              xmlns:viewModels="clr-namespace:SalonAccountSystem.ViewModels"
-             Title="Home"             
+             xmlns:controls="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar" 
+           
+             Title="Home"   
+             
              BackgroundColor="AliceBlue"
+             
              >
     <ScrollView>
-    
-    <VerticalStackLayout>
-        <Grid RowDefinitions="*, *, *"  Margin="0,10" HorizontalOptions="Center">
+        <VerticalStackLayout>
+        <Grid RowDefinitions="*, *, *"  Margin="0,5" HorizontalOptions="Center">
             <StackLayout Orientation="Horizontal">
-                <Label Text="Hello," FontSize="18" FontAttributes="Bold"/>
-                <Label  Margin="10,0" x:Name="lblUserFullName" FontSize="18" FontAttributes="Bold"/>
+                    <!--<Image Margin="10,0" Source="user_login.png" WidthRequest="30" HeightRequest="30" Background="Transparent"></Image>-->
+                    <Label Text="Hello," FontSize="16" TextColor="DodgerBlue" FontAttributes="Bold"/>
+                    <Label  Margin="8,0" Text="{Binding DisplayName.FullName}" TextColor="DodgerBlue" FontSize="16" FontAttributes="Bold"/>
             </StackLayout>
         </Grid>
 
-        <HorizontalStackLayout HorizontalOptions="CenterAndExpand" >
-            <Button Margin="0,10"  Command="{Binding AddSalesCommand}" CornerRadius="50" ImageSource="money.png" Text="Add Sales" FontSize="20" TextColor="Black" HeightRequest="50" WidthRequest="250" BackgroundColor="orange"/>
-        </HorizontalStackLayout>
+           
+            <VerticalStackLayout>
+                <controls:Calendar
+                      Margin="12,2" 
+                      CalendarLayout="Week"                 
+                      VerticalOptions="Fill"
+                      HorizontalOptions="Fill" 
+                      ArrowsBackgroundColor="Beige"
+                      ArrowsSymbolPrev="&lt;"                      
+                      ArrowsSymbolNext=">"                 
+                      SelectedDate="{Binding SalesDetail.SalesDate}"
+                      DayTappedCommand="{Binding GetSelectedDateCommand}"/>
+            </VerticalStackLayout>
 
-            <StackLayout Margin="0,10" Orientation="Horizontal" HorizontalOptions="Center">
-                <Label Text="Today Sales: " FontSize="20" FontAttributes="Bold" TextColor="Blue"/>
-                <Label Text="{Binding MonthlySalesDetail.ShowTotalAmount,StringFormat='{0:n2}' }" FontSize="20" FontAttributes="Bold" TextColor="Blue" HorizontalOptions="Center"/>
+            <!--<StackLayout Margin="40,10" Orientation="Horizontal" IsVisible="{Binding MonthlySalesDetail.IsTotalAmountVisible}">
+                <Label Text="Today Sales: " FontSize="18" FontAttributes="Bold" />
+                <Label Text="{Binding MonthlySalesDetail.ShowTotalAmount,StringFormat='{0:n2}' }" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+            </StackLayout>-->
+
+
+            <!--<HorizontalStackLayout HorizontalOptions="End" >
+                <Button Margin="20,10"  Command="{Binding AddSalesCommand}" CornerRadius="50"  Text="+" FontSize="40" TextColor="White" 
+             Padding="-30" HeightRequest="60" WidthRequest="60" BackgroundColor="Tomato"/>
+
+            </HorizontalStackLayout>-->
+
+
+            <StackLayout Orientation="Horizontal" >
+
+                <StackLayout Margin="20,10" Orientation="Horizontal" IsVisible="{Binding MonthlySalesDetail.IsTotalAmountVisible}">
+                    <Label Margin="0,10" Text="Total Sales: " FontSize="18" FontAttributes="Bold" />
+                    <Label Margin="0,10" Text="{Binding MonthlySalesDetail.ShowTotalAmount,StringFormat='{0:n2}' }" FontSize="18" FontAttributes="Bold" HorizontalOptions="Center"/>
+                </StackLayout>
+
+                <StackLayout IsVisible="{Binding MonthlySalesDetail.IsTotalAmountVisible}">
+                    <!--<Button Margin="80,0" Command="{Binding AddSalesCommand}" CornerRadius="50"  Text="+" FontSize="40" TextColor="White" 
+                     Padding="-30" HeightRequest="60" WidthRequest="60" BackgroundColor="Tomato"/>-->
+
+                    <Button Margin="80,0" Command="{Binding AddSalesCommand}" CornerRadius="50"  Text="+" FontSize="40" TextColor="White" 
+                            Padding="-30" HeightRequest="60" WidthRequest="60" BackgroundColor="Tomato"/>
+
+                </StackLayout>
+                
+                <Button Margin="150,0"  Command="{Binding AddSalesCommand}" CornerRadius="50"  Text="+" FontSize="40" TextColor="White" 
+                        Padding="-30" HeightRequest="60" WidthRequest="60" BackgroundColor="Tomato"/>
+
+
             </StackLayout>
 
-
-            <CollectionView Margin="20,3" ItemsSource="{Binding MonthlyGroupSalesList}" IsGrouped="True"  ItemsLayout="VerticalGrid,50" >
+            <VerticalStackLayout Margin="0,70" IsVisible="{Binding MonthlySalesDetail.IsLayoutVisible}" >
+                <!--<Image Source="salon.png" Margin="0,25" HeightRequest="60" WidthRequest="60" HorizontalOptions="Center"/>-->
+                <Label Text="You don't have any sales on this day! " FontSize="16" FontAttributes="Bold" TextColor="DodgerBlue" HorizontalOptions="Center"/>
+                <Label Margin="0,10" Text="Tap + to add sales" FontSize="16" FontAttributes="Bold" TextColor="DodgerBlue" HorizontalOptions="Center"/>
+            </VerticalStackLayout>
+          
+            <CollectionView Margin="20,20" ItemsSource="{Binding MonthlyGroupSalesList}" IsGrouped="True"  ItemsLayout="VerticalGrid,50" >
                 
             <CollectionView.GroupHeaderTemplate>
                  <DataTemplate x:DataType="models:DailySalesGroupModel">
-                        <Frame>
+                        <Frame BackgroundColor="LightYellow" HeightRequest="125">
                             <VerticalStackLayout>
-                                <Grid RowDefinitions="*, *" ColumnDefinitions="*, *" ColumnSpacing="100">
+                                <Grid RowDefinitions="*, *" ColumnDefinitions="*, *" >
                                     <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
-                                        <Image Source="category.png" WidthRequest="30" HeightRequest="30" Background="Transparent"></Image>
-                                        <Label Margin="10,10" Text="{Binding SalesType}" FontSize="18" FontAttributes="Bold"/>
+                                        <Image Source="category.png" WidthRequest="25" HeightRequest="25" Background="Transparent"></Image>
+                                        <Label Margin="10,10" Text="{Binding SalesType}" FontSize="20" FontAttributes="Bold"/>
                                     </StackLayout>
 
                                     <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="0" >
-                                        <Image Source="user_login.png" WidthRequest="30" HeightRequest="30" Background="Transparent"></Image>
-                                        <Label Margin="10,12" Text="{Binding Count}" FontSize="16" FontAttributes="Bold"/>
+                                        <Image Source="user_login.png" WidthRequest="25" HeightRequest="25" Background="Transparent"></Image>
+                                        <Label Margin="10,12" Text="{Binding Count}" FontSize="18" FontAttributes="Bold"/>
                                     </StackLayout>
 
                                     <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="1" HorizontalOptions="Center">
                                         <Image Source="dollar.png" WidthRequest="30" HeightRequest="30" Background="Transparent"></Image>
                                     </StackLayout>
 
-                                    <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalOptions="Center">
-                                        <Label Margin="10,12" Text="{Binding Amount, StringFormat='{0:n2}'} "  FontSize="16" FontAttributes="Bold" TextColor="Blue"/>
+                                    <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalOptions="EndAndExpand">
+                                        <Label Margin="0,12" Text="{Binding Amount, StringFormat='{0:n2}'} "  FontSize="18" FontAttributes="Bold" TextColor="Green"/>
                                     </StackLayout>
-
-                                    <!--<StackLayout  Grid.Row="0" Grid.Column="1" Grid.RowSpan="3">
-                                        <Image Margin="0,20" Source="salon_main.png" WidthRequest="100" HeightRequest="100" HorizontalOptions="End"/>
-                                    </StackLayout>-->
-                                    
+        
                                 </Grid>
+
                             </VerticalStackLayout>
+
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:HomePageViewModel}},Path=NavigateToSalesDetailPageCommand}"
+                                                      CommandParameter="{Binding .}" />
+                            </Frame.GestureRecognizers>
+
                         </Frame>
                  </DataTemplate>
             </CollectionView.GroupHeaderTemplate>
@@ -79,6 +131,8 @@
 
         </CollectionView>
 
-    </VerticalStackLayout>
+           
+
+        </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

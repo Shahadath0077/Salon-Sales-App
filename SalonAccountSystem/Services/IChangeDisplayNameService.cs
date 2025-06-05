@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace SalonAccountSystem.Services
 {
-    public interface IChangePasswordService
+    public interface IChangeDisplayNameService
     {
-        Task<int> ChangePassword(ChangePasswordModel changePasswordModel);
+        Task<int> ChangeDisplayName(ChangeDisplayNameModel changeDisplayNameModel);
+        Task<string> GetDisplayName();
+       
     }
 }

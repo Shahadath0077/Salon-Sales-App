@@ -1,5 +1,6 @@
 using CommunityToolkit.Maui.Views;
 using SalonAccountSystem.ViewModels;
+using System.Linq.Expressions;
 
 namespace SalonAccountSystem.Views;
 
@@ -13,8 +14,20 @@ public partial class AddServiceTypePopup : Popup
         this.BindingContext = _settingsPageViewModel;
 
     }
-    private void Button_Clicked(object sender, EventArgs e)
+
+    private void CloseButton_Clicked(object sender, EventArgs e)
     {
-		this.Close();
+        Button btnSender = (Button)sender;
+        var name = btnSender.Text;
+        var service = serviceName.Text;
+
+        if (service != null)
+        {
+            this.Close();
+        }
+        else if (name == null)
+        {
+            this.Close();
+        }
     }
 }

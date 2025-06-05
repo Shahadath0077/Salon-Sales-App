@@ -6,49 +6,44 @@
              xmlns:viewModels="clr-namespace:SalonAccountSystem.ViewModels"
              Title="Settings"
              BackgroundColor="AliceBlue">
-    
-    <VerticalStackLayout >
 
-        <Button Margin="30,40"              
-                Text="Change Password" FontSize="20" 
-                HeightRequest="60" TextColor="Black"
-                BackgroundColor="DarkOrange"
-                Command="{Binding ShowChangePasswordPopupCommand}" />
-
-        <Button Margin="30,0" 
-                Text="Add Service Type" FontSize="20" 
-                HeightRequest="60" TextColor="Black"           
-                BackgroundColor="DarkOrange"
+    <ScrollView>
+        <VerticalStackLayout >
+            <Button Margin="30,10"  
+                x:Name="displayName"
+                Text="Change Display Name" FontSize="18" 
+                HeightRequest="55"  TextColor="Black" 
+                BackgroundColor="Bisque"
+                Command="{Binding ShowChangeDisplayNamePopupCommand}" />
+            <Button Margin="30,10" 
+                Text="Add Service Type" FontSize="18" 
+                HeightRequest="55" TextColor="Black"          
+                BackgroundColor="Bisque"
                 Command="{Binding ShowServiceTypePopupCommand}" />
+            <Label Margin="30,20" Text="List of Service Type" FontSize="18" FontAttributes="Bold" HorizontalTextAlignment="Start" TextColor="Blue" />
+            <CollectionView Margin="30,0" ItemsSource="{Binding ServiceTypeList}" >
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:AddServiceTypeModel">
+                        <Frame CornerRadius="0" BackgroundColor="Transparent" >
+                            <VerticalStackLayout>
+                                <HorizontalStackLayout HorizontalOptions="Start">
+                                    <Image Margin="10,0" Source="category.png"/>
+                                    <Label  Text="{Binding ServiceType}" FontSize="18" FontAttributes="Bold" />
 
+                                </HorizontalStackLayout>
 
-        <Label Margin="30,20" Text="List of Service Type" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Start" TextColor="Gray" />
+                            </VerticalStackLayout>
 
-
-        <CollectionView Margin="30,0" ItemsSource="{Binding ServiceTypeList}" >
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="models:AddServiceTypeModel">
-                    <Frame CornerRadius="0" BackgroundColor="Transparent">
-                      <VerticalStackLayout>
-                          <HorizontalStackLayout HorizontalOptions="Start">
-                              <Image Margin="10,0" Source="category.png"/>
-                              <Label  Text="{Binding ServiceType}" FontSize="18" FontAttributes="Bold" />
-                         
-                          </HorizontalStackLayout>
-                          
-                      </VerticalStackLayout>
-
-                        <Frame.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:SettingsPageViewModel}},Path=DisplayActionCommand}"
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:SettingsPageViewModel}},Path=DisplayActionCommand}"
                                                   CommandParameter="{Binding .}" />
-                        </Frame.GestureRecognizers>
+                            </Frame.GestureRecognizers>
 
-                    </Frame>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
 
-        </CollectionView>
-
-
-    </VerticalStackLayout>
+            </CollectionView>
+        </VerticalStackLayout>
+    </ScrollView>
 </ContentPage>

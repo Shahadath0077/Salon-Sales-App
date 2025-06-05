@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<toolkit:Popup xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+               xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+               x:Class="SalonAccountSystem.Views.ServiceListPopup"
+               xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit" 
+               xmlns:models="clr-namespace:SalonAccountSystem.Models"
+               xmlns:viewModels="clr-namespace:SalonAccountSystem.ViewModels"
+               Color="Transparent" >
+
+
+    
+        <Border Stroke="Transparent" BackgroundColor="white">
+            <Border.StrokeShape>
+                <RoundRectangle CornerRadius="25"/>
+            </Border.StrokeShape>
+
+            <VerticalStackLayout>
+                <Button ImageSource="x_close.png" FontSize="25" HeightRequest="50" HorizontalOptions="End" BackgroundColor="Transparent" Clicked="Button_Clicked_1"/>
+ 
+                <CollectionView Margin="0,0" ItemsSource="{Binding ServiceTypeList}" MaximumHeightRequest="500" WidthRequest="330">
+                    <CollectionView.ItemTemplate>
+                  
+                        <DataTemplate x:DataType="models:AddServiceTypeModel">
+
+                        
+                            <HorizontalStackLayout  HorizontalOptions="Fill">
+                            <ScrollView>
+                                <!--<Button Margin="0,6"  WidthRequest="280" HeightRequest="60" HorizontalOptions="Fill" 
+                                        Text="{Binding ServiceType}" BackgroundColor="blue"  TextColor="White" BorderWidth="0" FontSize="18" FontAttributes="Bold" Clicked="Button_Clicked" />-->
+
+
+
+                                <Button  
+                                  Margin="0,8" x:Name="btnServiceType" BorderColor="Teal" BorderWidth="0" Text="{Binding ServiceType}" 
+                                  TextColor="Black" BackgroundColor="WhiteSmoke" CornerRadius="0" 
+                                  WidthRequest="330" HeightRequest="60" FontSize="18" FontAttributes="Bold" Clicked="Button_Clicked"/>
+
+
+                            </ScrollView>
+                        </HorizontalStackLayout>
+                       
+
+
+
+                        <!--<Frame CornerRadius="2" BorderColor="Transparent" BackgroundColor="Transparent" Margin="0,10" WidthRequest="200" >
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout HorizontalOptions="Start">
+                                        <Image Margin="5,0" Source="category.png"/>
+                                        <Label  Text="{Binding ServiceType}" FontSize="18" FontAttributes="Bold" />
+
+                                    </HorizontalStackLayout>
+
+                                </VerticalStackLayout>
+
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewModels:AddUpdateSalesPageViewModel}},Path=DisplayActionCommand}"
+                                      CommandParameter="{Binding .}" />
+                                </Frame.GestureRecognizers>
+
+                            </Frame>-->
+                        </DataTemplate>
+           
+            </CollectionView.ItemTemplate>
+
+                </CollectionView>
+           
+
+
+        </VerticalStackLayout>
+        </Border>
+    
+</toolkit:Popup>

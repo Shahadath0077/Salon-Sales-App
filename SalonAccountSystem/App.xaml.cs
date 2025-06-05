@@ -1,10 +1,10 @@
 ﻿using SalonAccountSystem.Models;
+using SalonAccountSystem.ViewModels;
 
 namespace SalonAccountSystem
 {
     public partial class App : Application
     {
-        public static LoginModel? loginModel;
         public App()
         {
             InitializeComponent();

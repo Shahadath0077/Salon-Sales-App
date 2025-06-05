@@ -1,4 +1,6 @@
-﻿using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Maui.Alerts;
+using CommunityToolkit.Maui.Views;
+using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SalonAccountSystem.Models;
 using SalonAccountSystem.Services;
@@ -15,8 +17,13 @@ namespace SalonAccountSystem.ViewModels
     [QueryProperty(nameof(SalesDetail), "SalesDetail")]
 
     [QueryProperty(nameof(SalesReportDetail), "SalesReportDetail")]
+
+    [QueryProperty(nameof(MonthlySalesDetail), "MonthlySalesDetail")]
     public partial class SalesDetailPageViewModel:ObservableObject
-    {
+    {  
+        [ObservableProperty]
+        private DailySalesModel _monthlySalesDetail = new DailySalesModel();
+
         public ObservableCollection<DailySalesModel> DailySalesList { get; set; } = new ObservableCollection<DailySalesModel>();
         public ObservableCollection<DailySalesDetailGroupModel> DailySalesGroupList { get; set; } = new ObservableCollection<DailySalesDetailGroupModel>();
 
@@ -25,17 +32,22 @@ namespace SalonAccountSystem.ViewModels
 
         [ObservableProperty]
         private SalesReportModel _salesReportDetail = new SalesReportModel();
-
+       
         private readonly IDailySalesService _dailySalesService;
-        //public DailySalesModel dailySalesModel { get; set; }
+        
+        AddUpdateSalesPageViewModel _addUpdateSalesPageViewModel; 
 
-        public LoginPageViewModel _loginPageViewModel;
-        public SalesDetailPageViewModel(IDailySalesService dailySalesService, LoginPageViewModel loginPageViewModel)
+        //public LoginPageViewModel _loginPageViewModel;
+        public SalesDetailPageViewModel(IDailySalesService dailySalesService, AddUpdateSalesPageViewModel addUpdateSalesPageViewModel)
         {
-            _dailySalesService = dailySalesService;
-            //dailySalesModel=new DailySalesModel();
-            _loginPageViewModel= loginPageViewModel;
+            _dailySalesService = dailySalesService;         
+            _addUpdateSalesPageViewModel = addUpdateSalesPageViewModel;
+            string saaleDate= SalesDetail.SalesDate.ToString("dd/MM/yyyy");
+            GetSalesList();
+
+
            
+
         }
 
         [RelayCommand]
@@ -46,18 +58,23 @@ namespace SalonAccountSystem.ViewModels
                 DailySalesList.Clear();
                 DailySalesGroupList.Clear();
                 double totalAmount = 0;
-                
-                
                 var salesList = await _dailySalesService.GetDailySalesList();
                 if (salesList?.Count > 0)
                 {                   
                     foreach (var sales in salesList)
                     {
                         //Filter by month
-                        if (sales.SalesDate.ToString("MMMM") == SalesReportDetail.SalesMonth)
+                        //if (sales.SalesDate.ToString("MMMM") == SalesReportDetail.SalesMonth)
+                        //if (sales.SalesDate.ToString("MMMM") == "May")
+                       
+                        var sDate = sales.SalesDate.ToString("dd/MM/yyyy");
+                        var tDate = SalesReportDetail.SalesDate.ToString("dd/MM/yyyy");
+
+                        //if (sales.SalesDate == SalesReportDetail.SalesDate)
+                        if (sDate == tDate && sales.SalesType== SalesReportDetail.SalesType)
                         {
-                            totalAmount += Convert.ToDouble(sales.Amount);
-                            DailySalesList.Add(sales);
+                        totalAmount += Convert.ToDouble(sales.Amount);
+                        DailySalesList.Add(sales);
                         }
                     }
                     // group the list by date
@@ -84,26 +101,26 @@ namespace SalonAccountSystem.ViewModels
         [RelayCommand]     
         public async Task DisplayAction(DailySalesModel dailySalesModel)
         {
-            var response = await AppShell.Current.DisplayActionSheet("Select Option", "OK", null, "Edit", "Delete");
+            var response = await AppShell.Current.DisplayActionSheet("Select Option", "Cancel", null, "Edit", "Delete");
             if (response == "Edit")
-            {
-                var navParam = new Dictionary<string, object>();
-                navParam.Add("SalesDetail", dailySalesModel);
-                await Shell.Current.GoToAsync("//salesdetailpage/addupdatesales", navParam); 
+            { 
+                AddUpdateSalesPopup popup = new AddUpdateSalesPopup(_addUpdateSalesPageViewModel, dailySalesModel);
+                Application.Current?.MainPage?.ShowPopup(popup);
             }
             else if (response == "Delete")
             {
-                bool answer = await Shell.Current.DisplayAlert("Confirm Operation", $"Are you sure you want to delete {dailySalesModel.SalesType}?", "Yes", "No");
+                bool answer = await Shell.Current.DisplayAlert("Confirm Delete", $"Are you sure you want to delete {dailySalesModel.SalesType}?", "Yes", "No");
                 if (!answer) return;
 
                 var delResponse = await _dailySalesService.DeleteSales(dailySalesModel);
                 if (delResponse > 0)
-                {
-                    await Shell.Current.DisplayAlert("Message", "Sales deleted successfully!", "OK");
+                {  
+                    string mesage = "Sales deleted successfully!";
+                    await Toast.Make(mesage, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
+
                     await GetSalesList();
                 }
             }
         }
-
     }
 }

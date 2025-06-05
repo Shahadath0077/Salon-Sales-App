@@ -13,8 +13,7 @@ namespace SalonAccountSystem.Services
         Task<int> AddSales(DailySalesModel dailySalesModel);
         Task<int> UpdateSales(DailySalesModel dailySalesModel);
         Task<int> DeleteSales(DailySalesModel dailySalesModel);
-
         Task<List<SalesReportModel>> GetDailySalesReportList();
-
+      
     }
 }
