@@ -69,20 +69,12 @@
 	  <None Remove="Resources\Images\calendar.svg" />
 	  <None Remove="Resources\Images\calendar_header.png" />
 	  <None Remove="Resources\Images\dollar.svg" />
-	  <None Remove="Resources\Images\expenses_main.png" />
 	  <None Remove="Resources\Images\gear.svg" />
 	  <None Remove="Resources\Images\home.svg" />
-	  <None Remove="Resources\Images\house.png" />
 	  <None Remove="Resources\Images\lock_login.png" />
-	  <None Remove="Resources\Images\login_image.png" />
 	  <None Remove="Resources\Images\logout.svg" />
-	  <None Remove="Resources\Images\mainbg.png" />
 	  <None Remove="Resources\Images\money.svg" />
-	  <None Remove="Resources\Images\monthly_expenses.png" />
-	  <None Remove="Resources\Images\salary.png" />
-	  <None Remove="Resources\Images\salon_main.png" />
 	  <None Remove="Resources\Images\user_login.png" />
-	  <None Remove="Resources\Images\user_profile.png" />
 	  <None Remove="Resources\Images\x_close.svg" />
 	</ItemGroup>
 

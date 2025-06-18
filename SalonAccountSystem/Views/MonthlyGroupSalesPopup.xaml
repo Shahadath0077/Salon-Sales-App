@@ -49,7 +49,7 @@
 
                 <CollectionView.GroupHeaderTemplate>
                     <DataTemplate x:DataType="models:DailySalesGroupModel">
-                        <Frame  BackgroundColor="#dceed1" HeightRequest="125">
+                        <Frame  BackgroundColor="#bceed1" HeightRequest="125" BorderColor="Transparent" CornerRadius="0">
                             <VerticalStackLayout>
                                 <Grid RowDefinitions="*, *" ColumnDefinitions="*, *" >
                                     <StackLayout Orientation="Horizontal" Grid.Row="0" Grid.Column="0" >
@@ -71,7 +71,7 @@
                                     </StackLayout>
 
                                     <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" HorizontalOptions="EndAndExpand">
-                                        <Label Margin="0,12" Text="{Binding Amount, StringFormat='{0:n2}'} "  FontSize="18" FontAttributes="Bold" TextColor="Green"/>
+                                        <Label Margin="0,12" Text="{Binding Amount, StringFormat='{0:n2}'} "  FontSize="18" FontAttributes="Bold" TextColor="Crimson"/>
                                     </StackLayout>
 
                                 </Grid>

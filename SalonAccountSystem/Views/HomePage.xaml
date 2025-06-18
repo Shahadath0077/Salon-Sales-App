@@ -6,8 +6,7 @@
              xmlns:viewModels="clr-namespace:SalonAccountSystem.ViewModels"
              xmlns:controls="clr-namespace:Plugin.Maui.Calendar.Controls;assembly=Plugin.Maui.Calendar" 
            
-             Title="Home"   
-             
+             Title="Home"          
              BackgroundColor="AliceBlue"
              
              >

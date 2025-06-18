@@ -13,8 +13,7 @@ public partial class ServiceListPopup : Popup
         _addUpdateSalesPageViewModel = addUpdateSalesPageViewModel;
 
         this.BindingContext = _addUpdateSalesPageViewModel;
-        _addUpdateSalesPageViewModel.GetServiceTypeListCommand.Execute(null);
-      
+        _addUpdateSalesPageViewModel.GetServiceTypeListCommand.Execute(null);  
     }
 
     private void Button_Clicked(object sender, EventArgs e)
