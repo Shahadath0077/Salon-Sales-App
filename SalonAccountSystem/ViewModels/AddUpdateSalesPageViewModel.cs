@@ -19,18 +19,19 @@ namespace SalonAccountSystem.ViewModels
     [QueryProperty(nameof(MonthlySalesDetail), "MonthlySalesDetail")]
     public partial class AddUpdateSalesPageViewModel : ObservableObject
     {
-
+        private readonly IDailySalesService _dailySalesService;
+        private readonly IAddServiceTypeService _addServiceTypeService;
         public ObservableCollection<DailySalesModel> DailySalesList { get; set; } = new ObservableCollection<DailySalesModel>();
         public ObservableCollection<DailySalesGroupModel> MonthlyGroupSalesList { get; set; } = new ObservableCollection<DailySalesGroupModel>();
-
-        [ObservableProperty]
-        private DailySalesModel _monthlySalesDetail = new DailySalesModel();
-
-
+      
         public ObservableCollection<DailySalesModel> MonthlySalesList { get; set; } = new ObservableCollection<DailySalesModel>();
 
         public ObservableCollection<AddServiceTypeModel> ServiceTypeList { get; set; } = new ObservableCollection<AddServiceTypeModel>();
 
+        public ObservableCollection<DailySalesDetailGroupModel> DailySalesGroupList { get; set; } = new ObservableCollection<DailySalesDetailGroupModel>();
+
+        [ObservableProperty]
+        private DailySalesModel _monthlySalesDetail = new DailySalesModel();
 
         [ObservableProperty]
         private DailySalesModel _salesDetail = new DailySalesModel();
@@ -38,20 +39,19 @@ namespace SalonAccountSystem.ViewModels
         [ObservableProperty]
         public AddServiceTypeModel selelctedServiceType;
 
-        private readonly IDailySalesService _dailySalesService;
+        [ObservableProperty]
+        private SalesReportModel _salesReportDetail = new SalesReportModel();
+ 
         private DailySalesModel _dailySalesModel { get; set; }
-       // private LoginPageViewModel _loginPageViewModel;
-
+       
         private SettingsPageViewModel _settingsPageViewModel;
-
-
-        private readonly IAddServiceTypeService _addServiceTypeService;
+ 
         public AddUpdateSalesPageViewModel(IDailySalesService dailySalesService, IAddServiceTypeService addServiceTypeService, SettingsPageViewModel settingsPageViewModel)
         {
             _dailySalesService = dailySalesService;
             _addServiceTypeService = addServiceTypeService;
-            _dailySalesModel = new DailySalesModel(); 
-            _settingsPageViewModel = settingsPageViewModel;
+            _dailySalesModel = new DailySalesModel();
+            _settingsPageViewModel = settingsPageViewModel;            
         }
 
         [RelayCommand]
@@ -69,27 +69,26 @@ namespace SalonAccountSystem.ViewModels
                     {
                         SelelctedServiceType = new AddServiceTypeModel();
                         SalesDetail = new DailySalesModel();
-
                         message = "Sales updated successfully!";
                         await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show(); 
                     }
                     else
                     {
-                        await Shell.Current.DisplayAlert("Heads Up!", "Something went wrong while updating sales", "OK");
+                        await Shell.Current.DisplayAlert("Update Failed!", "Something went wrong...please try again", "OK");
                     }
                 }
                 else
                 {
                     // add new sales                                       
-                        if (SalesDetail.SalesType!="Select a service" && !string.IsNullOrWhiteSpace(SalesDetail.SalesDate.ToString()) && SalesDetail.Amount!= null)
-                        {
-                        response = await _dailySalesService.AddSales(new DailySalesModel
-                        {
-                            SalesDate = SalesDetail.SalesDate,
-                            Amount = SalesDetail.Amount,                           
-                            SalesType = SalesDetail.SalesType,
+                    if (SalesDetail.SalesType!="Select a service" && !string.IsNullOrWhiteSpace(SalesDetail.SalesDate.ToString()) && SalesDetail.Amount!= null)
+                    {
+                    response = await _dailySalesService.AddSales(new DailySalesModel
+                    {
+                        SalesDate = SalesDetail.SalesDate,
+                        Amount = SalesDetail.Amount,                           
+                        SalesType = SalesDetail.SalesType,
 
-                        });
+                    });
 
                         if (response > 0)
                         {
@@ -97,7 +96,11 @@ namespace SalonAccountSystem.ViewModels
                             SelelctedServiceType = new AddServiceTypeModel();
                             SalesDetail = new DailySalesModel();
                             message = "Sales saved successfully!";
-                            await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
+
+                           
+                        await Toast.Make(message,    CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
+
+
 
                         }
                     }
@@ -105,9 +108,9 @@ namespace SalonAccountSystem.ViewModels
                     {
                         if (SalesDetail.SalesType == "Select a service")
                         {
-                             message = "Please select service!";
+                             message = "Please select a service!";
                         }
-                        if (SalesDetail.Amount == null)
+                        else if (SalesDetail.Amount == null)
                         {
                              message = "Please enter amount!";
                         }
@@ -119,6 +122,7 @@ namespace SalonAccountSystem.ViewModels
             {  
                 string message = "Please select a service!";
                 await Toast.Make(message, CommunityToolkit.Maui.Core.ToastDuration.Short).Show();
+                Console.WriteLine(ex);
             }
         }
 
@@ -136,11 +140,6 @@ namespace SalonAccountSystem.ViewModels
                         ServiceTypeList.Add(serviceType);
                     }
                 }
-                else
-                {
-                    
-                }
-
             }
             catch (Exception ex)
             {
@@ -149,10 +148,15 @@ namespace SalonAccountSystem.ViewModels
         }
 
         [RelayCommand]
-        public async Task ServiceList()
+        public void ServiceList()
         {
             ServiceListPopup popup = new ServiceListPopup(this);
             Application.Current?.MainPage?.ShowPopup(popup);
-        }   
-    }   
+        }
+
+
+       
+        
+
+    }
 }

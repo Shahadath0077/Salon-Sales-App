@@ -72,6 +72,7 @@ namespace SalonAccountSystem.ViewModels
                         .Select(g => new SalesReportModel
                         {
                             SalesMonth = g.Key.date.ToString("MMMM"),
+                            SalesYear=g.Key.date.ToString("yyyy"),
                             Amount = g.Sum(x => x.Amount)
                         }).ToList();
 
@@ -106,7 +107,7 @@ namespace SalonAccountSystem.ViewModels
                 {
                     foreach (var sales in salesList)
                     {
-                        if (sales.SalesDate.ToString("MMMM") == _salesReportDetail.SalesMonth)
+                        if (sales.SalesDate.ToString("MMMM") == SalesReportDetail.SalesMonth)
                         {
                             totalAmount += Convert.ToDouble(sales.Amount);
                             DailySalesList.Add(sales);

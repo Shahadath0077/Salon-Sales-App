@@ -42,12 +42,8 @@ namespace SalonAccountSystem.ViewModels
         {
             _dailySalesService = dailySalesService;         
             _addUpdateSalesPageViewModel = addUpdateSalesPageViewModel;
-            string saaleDate= SalesDetail.SalesDate.ToString("dd/MM/yyyy");
-            GetSalesList();
-
-
-           
-
+            //string saaleDate= SalesDetail.SalesDate.ToString("dd/MM/yyyy");
+            //GetSalesList();
         }
 
         [RelayCommand]

@@ -29,22 +29,7 @@
                       WidthRequest="280" HeightRequest="50" FontSize="16"  Command="{Binding ServiceListCommand}"/>
 
             </HorizontalStackLayout>
-            
-            <!--<HorizontalStackLayout>
-
-                <Image Source="category.png" WidthRequest="25" HeightRequest="25" Background="Transparent"></Image>
-                <Picker x:Name="servicePicker"
-                     Margin="20,2"                                 
-                     Title="Select a service"                           
-                     ItemsSource ="{Binding ServiceTypeList}"                           
-                     ItemDisplayBinding="{Binding ServiceType}"
-                     SelectedItem="{Binding SelelctedServiceType}" 
-                     WidthRequest="280"
-                     FontSize="18" >
-                </Picker>
-
-            </HorizontalStackLayout>-->
-            
+             
             <HorizontalStackLayout>
                 <Image Margin="0,10" Source="dollar.png" WidthRequest="25" HeightRequest="25" Background="Transparent"></Image>
                 <Entry x:Name="amountEntry" Margin="20,10" Text="{Binding SalesDetail.Amount}" FontSize="18"  Keyboard="Numeric" Placeholder="Enter amount" WidthRequest="280" />

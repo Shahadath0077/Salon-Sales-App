@@ -11,6 +11,7 @@ namespace SalonAccountSystem.Models
     {
         public DateTime SalesDate { get; set; } 
         public string? SalesMonth { get; set; }
+        public string? SalesYear { get; set; }
         public double? Amount { get; set; }
         public string? SalesType { get; set; }
         

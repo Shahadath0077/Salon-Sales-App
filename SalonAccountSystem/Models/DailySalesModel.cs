@@ -42,7 +42,7 @@ namespace SalonAccountSystem.Models
         {
             SalesType = salesType;
             Amount = salesList.Where(x => x.Amount.HasValue).Sum(x => x.Amount.Value);
-            Percentage = String.Format("{0:0.0#}", (Amount / totalAmount) * 100);
+            Percentage = String.Format("{0:0.00}", (Amount / totalAmount) * 100);
         }
     }
 

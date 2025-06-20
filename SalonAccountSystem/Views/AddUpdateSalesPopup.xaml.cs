@@ -34,16 +34,15 @@ public partial class AddUpdateSalesPopup : Popup
 
         var tt = btnServiceType.Text;
 
-       // _addUpdateSalesPageViewModel.SalesDetail.SalesType = "Select a service";
-        
+       
         if (amountEntry.Text != null && tt != "Select a service")
         {
-            _addUpdateSalesPageViewModel.SalesDetail.SalesType = "Select a service";
+            //_addUpdateSalesPageViewModel.SalesDetail.SalesType = "Select a service";
             this.Close();
         }      
         else if (name == "CANCEL")
         {
-            _addUpdateSalesPageViewModel.SalesDetail.SalesType = "Select a service";
+            //_addUpdateSalesPageViewModel.SalesDetail.SalesType = "Select a service";
             _addUpdateSalesPageViewModel.SalesDetail.Amount = null;
             this.Close();
         }

@@ -1,5 +1,7 @@
 ﻿using SalonAccountSystem.Models;
 using SalonAccountSystem.SQLiteHelper;
+using SalonAccountSystem.ViewModels;
+using SalonAccountSystem.Views;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,5 +31,6 @@ namespace SalonAccountSystem.Services
             return await SQLiteDbConnect._dbConnection.DeleteAsync(addServiceTypeModel);
         }
 
+        
     }
 }

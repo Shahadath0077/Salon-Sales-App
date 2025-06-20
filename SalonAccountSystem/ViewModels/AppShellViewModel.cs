@@ -14,7 +14,7 @@ namespace SalonAccountSystem.ViewModels
     public partial class AppShellViewModel : ObservableObject
     {
         [RelayCommand]
-        public async Task About()
+        public void About()
         {
             AboutPopup aboutPopup = new AboutPopup(this);
             Application.Current?.MainPage?.ShowPopup(aboutPopup);

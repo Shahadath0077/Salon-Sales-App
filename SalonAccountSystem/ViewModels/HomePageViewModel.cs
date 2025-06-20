@@ -14,56 +14,31 @@ using System.Threading.Tasks;
 namespace SalonAccountSystem.ViewModels
 {
     [QueryProperty(nameof(MonthlySalesDetail), "MonthlySalesDetail")]
-    [QueryProperty(nameof(DisplayName), "DisplayName")]
     [QueryProperty(nameof(SalesDetail), "SalesDetail")]
-    [QueryProperty(nameof(SalesReportDetail), "SalesReportDetail")]
-
     public partial class HomePageViewModel : ObservableObject
     {
+        private readonly IDailySalesService _dailySalesService;
+        private readonly IChangeDisplayNameService _changeDisplayNameService;
+
         public ObservableCollection<DailySalesModel> DailySalesList { get; set; } = new ObservableCollection<DailySalesModel>();
         public ObservableCollection<DailySalesGroupModel> MonthlyGroupSalesList { get; set; } = new ObservableCollection<DailySalesGroupModel>();
       
         [ObservableProperty]
         private DailySalesModel _monthlySalesDetail = new DailySalesModel();
-
         [ObservableProperty]
-        private DailySalesModel _salesDetail = new DailySalesModel();
-        public DailySalesModel salesDetailModel { get; set; }
-
-        [ObservableProperty]
-        private SalesReportModel _salesReportDetail = new SalesReportModel();
-
-        public SalesReportModel _salesReportModel { get; set; }
-        
-
+        private DailySalesModel _salesDetail = new DailySalesModel();         
         [ObservableProperty]
         private ChangeDisplayNameModel _displayName = new ChangeDisplayNameModel();
 
-
         AddUpdateSalesPageViewModel _addUpdateSalesPageViewModel;
-
-
-        SalesDetailPageViewModel _salesDetailPageViewModel;
-        private AddUpdateSalesPageViewModel addUpdateSalesPageViewModel;
-
-        //public LoginModel loginModel { get; set; }
-        //public LoginPageViewModel _loginPageViewModel;
-
-        private readonly IDailySalesService _dailySalesService;
-        private readonly IChangeDisplayNameService _changeDisplayNameService;
+        SalesDetailPageViewModel _salesDetailPageViewModel;        
+      
         public HomePageViewModel(IDailySalesService dailySalesService, IChangeDisplayNameService changeDisplayNameService, AddUpdateSalesPageViewModel addUpdateSalesPageViewModel, SalesDetailPageViewModel salesDetailPageViewModel)
         {
-            _dailySalesService = dailySalesService;
-            salesDetailModel = new DailySalesModel();           
+            _dailySalesService = dailySalesService;       
             _changeDisplayNameService = changeDisplayNameService;
-
-            _addUpdateSalesPageViewModel= addUpdateSalesPageViewModel;
-           
+            _addUpdateSalesPageViewModel= addUpdateSalesPageViewModel;          
             _salesDetailPageViewModel = salesDetailPageViewModel;
-
-            _salesReportModel= new SalesReportModel();
-
-           
         }
 
        
@@ -127,7 +102,7 @@ namespace SalonAccountSystem.ViewModels
         }
 
         [RelayCommand]
-        public async Task AddSales()
+        public void AddSales()
         {
             AddUpdateSalesPopup popup = new AddUpdateSalesPopup(_addUpdateSalesPageViewModel,null);
             Application.Current?.MainPage?.ShowPopup(popup);
@@ -138,7 +113,7 @@ namespace SalonAccountSystem.ViewModels
         public async Task GetName()
         {
             var name = await _changeDisplayNameService.GetDisplayName();
-            if (name != null) 
+            if (name != string.Empty) 
             {                
                 DisplayName.FullName = name;
             }
@@ -161,9 +136,9 @@ namespace SalonAccountSystem.ViewModels
         }
 
         [RelayCommand]
-        public async Task NavigateToSalesDetailPage(DailySalesGroupModel dailySalesModels)
+        public async Task NavigateToSalesDetailPage(DailySalesGroupModel dailySalesGroupModel)
         {
-            foreach (var tt in dailySalesModels)
+            foreach (var tt in dailySalesGroupModel)
             {
                 _salesDetailPageViewModel.SalesReportDetail.SalesDate = tt.SalesDate;
                 _salesDetailPageViewModel.SalesReportDetail.SalesType = tt.SalesType;

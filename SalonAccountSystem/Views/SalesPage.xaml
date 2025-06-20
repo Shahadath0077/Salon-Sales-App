@@ -21,28 +21,36 @@
             <CollectionView Margin="10,10" ItemsSource="{Binding MonthlySalesReportList}" >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="models:SalesReportModel" >
-                        <Frame Margin="5">
+                        <Frame Margin="5" BorderColor="DodgerBlue" CornerRadius="20">
                             <HorizontalStackLayout>
 
                                 <Grid>
-                                    <Grid.RowDefinitions>
+                                    <Grid.RowDefinitions >
                                         <RowDefinition />
+                                        <RowDefinition Height="25" />
                                         <RowDefinition />
                                     </Grid.RowDefinitions>
 
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition />
                                         <ColumnDefinition Width="150"/>
-                                        <ColumnDefinition Width="180" />
+                                        <ColumnDefinition Width="180"/>
+                                        <ColumnDefinition Width="80"/>
+                                        
+                                      
                                     </Grid.ColumnDefinitions>
 
                                     <Image Grid.Row="0" Grid.Column="0" Source="calendar_header.png" WidthRequest="30" HeightRequest="30"/>
-                                    <Label Margin="10,10"  Grid.Row="0" Grid.Column="1"  Text="{Binding SalesMonth}" FontSize="18" FontAttributes="Bold"/>
+                                    <Label Margin="10,-3"  Grid.Row="0" Grid.Column="1"  Text="{Binding SalesMonth}" FontSize="20" FontAttributes="Bold"/>
 
-                                    <Image  Grid.Row="0" Grid.Column="2" Source="gt.png" WidthRequest="30" HeightRequest="20"/>
+                                    <Label Margin="10,-5"  Grid.Row="1" Grid.Column="1"  Text="{Binding SalesYear}" FontSize="16" FontAttributes="Bold" TextColor="Gray"/>
 
-                                    <Image  Grid.Row="1" Grid.Column="0" Source="dollar.png" WidthRequest="40" HeightRequest="40" Background="Transparent"></Image>
-                                    <Label Margin="10,10" Grid.Row="1" Grid.Column="1"  Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Green"/>
+                                    <!--<Label Margin="-40,10"  Grid.Row="0" Grid.Column="2"  Text="{Binding SalesYear}" FontSize="18" FontAttributes="Bold"/>-->
+
+                                    <Image Grid.Row="0" Grid.Column="2" Source="gt.png" WidthRequest="25" HeightRequest="20"/>
+
+                                    <Image  Grid.Row="2" Grid.Column="0" Source="dollar.png" WidthRequest="40" HeightRequest="40" Background="Transparent"></Image>
+                                    <Label Margin="10,10" Grid.Row="2" Grid.Column="1"  Text="{Binding Amount,StringFormat='{0:n2}'}" FontSize="18" FontAttributes="Bold" TextColor="Green"/>
 
                                 </Grid>
 

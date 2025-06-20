@@ -29,15 +29,21 @@ namespace SalonAccountSystem.Services
             return salesList;
         }
 
-        public Task<List<SalesReportModel>> GetDailySalesReportList()
-        {
-            throw new NotImplementedException();
-        }
-
+       
         public async Task<int> UpdateSales(DailySalesModel dailySalesModel)
         {
             await SQLiteDbConnect.ConnectDb();
-            return await SQLiteDbConnect._dbConnection.UpdateAsync(dailySalesModel);
+            if (dailySalesModel.SalesType== "Select a service")
+            {
+                return -1;
+            }
+            else
+            {
+                return await SQLiteDbConnect._dbConnection.UpdateAsync(dailySalesModel);
+            }
+
+           
+            
         }
     }
 }
